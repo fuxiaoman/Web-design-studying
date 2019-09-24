@@ -17,4 +17,49 @@
 （1）一路默认，我安在C:\Program Files
 （2）找到想要保存仓库的目录，右键——>选择git bash here
 （3）输入命令 git clone +仓库地址——>回车，同步到本地。
+4.同步文件：
+（1）在仓库文件夹中直接建立文件
+（2）在文件所在目录右键进入git-bash
+（3）git add+文件名.后缀名,将文件加入仓库。
+（4）git commit 提交
+（5）git push 登录github账号，等一会就同步到服务器上了，从网页登陆就能看到了
+
+5.遇到的一些问题：
+（1）使用git commit -m ""，就遇到了这个问题
+** Please tell me who you are.
+Run
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'tim@newton.(none)')
+解决办法：
+找到工程目录的.git文件夹，打开之后找到config文件，在最后边添加如下信息：
+[user]
+email=your email
+name=your name
+（注：你可能会找不到工程目录下的.git文件，那是因为这个目录默认是隐藏的，找到查看，把隐藏文件的勾取消掉就行了）
+（2）忘记是什么错误了，就是说上传不了可能是因为没有配置ssh密钥
+①查看是否存在ssh 密钥，存在了就不用创建了
+$cd ~/.ssh#
+②创建密钥
+$ssh-keygen -t rsa -C "your_email@example.com"
+直接回车，则将密钥按默认文件进行存储。
+完成后显示如下信息：
+Your identification has been saved in /c/Users/you/.ssh/id_rsa.
+Your public key has been saved in /c/Users/you/.ssh/id_rsa.pub.
+The key fingerprint is:
+01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db your_email@example.com
+③在GitHub账户中添加公钥
+找到上面那段信息的id_rsa.pub,打开把内容复制下来。
+登陆github——>setting——>点击SSH and GPGkeys——>New ssh key
+title可以随便写，Key一栏把刚刚复制的粘贴——>add shh key
+④测试
+输入$ssh -T git@github.com——>输入yes
+Hi username! You’ve successfully authenticated, but GitHub does not provide shell access.
+看到Hi说明好了
+
+
 
